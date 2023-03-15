@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.4'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.unbroken-dome.xjc' version '2.0.0'
+}
+
+apply from: project.file('versions.gradle')
+
+group = 'ru.nsu.trubitsyna'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    jaxb
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Spring
+    implementation "org.springframework.boot:spring-boot-starter-validation:${versions['spring-boot']}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${versions['spring-boot']}"
+    implementation "org.springframework.boot:spring-boot-starter-web-services:${versions['spring-boot']}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${versions['spring-boot']}"
+    //WebClient
+    implementation "org.springframework.boot:spring-boot-starter-webflux:${versions['spring-boot']}"
+    //Logback
+    implementation "ch.qos.logback:logback-core:${versions['logback']}"
+    implementation "ch.qos.logback:logback-classic:${versions['logback']}"
+    implementation "org.slf4j:slf4j-api:${versions['slf4j']}"
+    //Lombok
+    compileOnly "org.projectlombok:lombok:${versions['lombok']}"
+    annotationProcessor "org.projectlombok:lombok:${versions['lombok']}"
+    //CombinatoricsLib
+    implementation "com.github.dpaukov:combinatoricslib3:${versions['combinatoricslib']}"
+    implementation "org.apache.commons:commons-lang3:${versions['apache-commons-lang']}"
+    implementation "wsdl4j:wsdl4j:${versions['wsdl4j']}"
+    //JAXB
+    implementation "javax.xml.bind:jaxb-api:2.3.0"
+}
+
+xjc {
+    xjcVersion = '3.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jar {
+    enabled = false
+}

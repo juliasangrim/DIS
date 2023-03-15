@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  manager:
+    container_name: manager-container
+    restart: always
+    build:
+      context: .
+      dockerfile: manager/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - lab2-net
+
+  worker:
+    container_name: worker-container
+    restart: always
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    networks:
+      - lab2-net
+    depends_on:
+      - manager
+
+networks:
+  lab2-net:

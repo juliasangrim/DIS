@@ -1,0 +1,9 @@
+ext.versions = [
+        'lombok'                 : '1.18.26',
+        'logback'                : '1.4.5',
+        'slf4j'                  : '2.0.6',
+        'spring-boot'            : '3.0.4',
+        'apache-commons-lang'    : '3.12.0',
+        'combinatoricslib'       : '3.3.3',
+        'wsdl4j'                 : '1.6.3'
+]
