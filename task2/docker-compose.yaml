@@ -10,18 +10,99 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - lab2-net
+      - lab3-net
 
-  worker:
-    container_name: worker-container
+  worker1:
+    container_name: worker-container1
     restart: always
     build:
       context: .
       dockerfile: worker/Dockerfile
     networks:
-      - lab2-net
+      - lab3-net
     depends_on:
       - manager
 
+  worker2:
+    container_name: worker-container2
+    restart: always
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    networks:
+      - lab3-net
+    depends_on:
+      - manager
+
+  mongodb1:
+    image: mongo:4
+    container_name: mongodb1
+    restart: always
+    volumes:
+      - mongodata1:/data/db
+    networks:
+      - lab3-net
+    ports:
+      - "27017:27017"
+    entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all" ]
+
+  mongodb2:
+    image: mongo:4
+    container_name: mongodb2
+    restart: always
+    volumes:
+      - mongodata2:/data/db
+    networks:
+      - lab3-net
+    ports:
+      - "27018:27017"
+    entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all" ]
+
+  mongodb3:
+    image: mongo:4
+    container_name: mongodb3
+    restart: always
+    volumes:
+      - mongodata3:/data/db
+    networks:
+      - lab3-net
+    ports:
+      - "27019:27017"
+    entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all" ]
+
+  mongosetup:
+    image: "mongo-setup"
+    build: "./mongo-setup"
+    container_name: "mongosetup"
+    depends_on:
+      - mongodb1
+    volumes:
+      - mongostatus:/data/
+    networks:
+      - lab3-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    container_name: "rabbitmq"
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_PASS=rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    networks:
+      - lab3-net
+
 networks:
-  lab2-net:
+  lab3-net:
+
+volumes:
+  mongodata1:
+  mongodata2:
+  mongodata3:
+  mongostatus:
+  rabbitmq:

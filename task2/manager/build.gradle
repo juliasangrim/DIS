@@ -43,6 +43,10 @@ dependencies {
     implementation "wsdl4j:wsdl4j:${versions['wsdl4j']}"
     //JAXB
     implementation "javax.xml.bind:jaxb-api:2.3.0"
+    //MongoDB
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${versions['spring-boot']}"
+    //RabbitMQ
+    implementation "org.springframework.boot:spring-boot-starter-amqp:${versions['spring-boot']}"
 }
 
 xjc {

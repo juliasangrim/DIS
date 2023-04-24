@@ -2,8 +2,6 @@ package ru.nsu.trubitsyna.manager.dto;
 
 import lombok.*;
 
-import java.util.UUID;
-
 /**
  * Ответ с идентификатором задачи.
  */
@@ -14,5 +12,5 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CrackHashResponse {
-    private UUID requestId;
+    private String requestId;
 }
